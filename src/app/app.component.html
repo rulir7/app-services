@@ -7,7 +7,6 @@
   <button type="submit">Salvar</button>
 </form>
 
-
 <table>
   <thead>
     <tr>
@@ -18,15 +17,24 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let contato of contatos">
-      <td>{{contato.nome}}</td>
-      <td>{{contato.email}}</td>
-      <td>{{contato.fone}}</td>
+    <tr *ngFor="let contato of contatos | paginate: {itemsPerPage: pageSize, currentPage: page}">
+      <td>{{ contato.nome }}</td>
+      <td>{{ contato.email }}</td>
+      <td>{{ contato.fone }}</td>
       <td>
         <button (click)="editar(contato)">Editar</button>
         <button (click)="excluir(contato.id)">Excluir</button>
       </td>
     </tr>
-   
   </tbody>
 </table>
+
+<!-- <div>
+  <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+  <span>Página {{ currentPage }} de {{ totalPages }}</span>
+  <button (click)="changePage(currentPage + 1)" [disabled]="currentPage >= totalPages">Próxima</button>
+</div> -->
+
+<div>
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</div>
